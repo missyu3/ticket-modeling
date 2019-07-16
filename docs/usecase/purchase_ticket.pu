@@ -1,0 +1,54 @@
+@startuml
+来館者グループ as UserGroup
+来館者 as User
+
+UserGroup -- User
+
+(観る回を選ぶ) as (selTime)
+
+UserGroup -> (selTime)
+(selTime) ..> (映画を選ぶ): include
+(selTime) ..> (日付を選ぶ): include
+(selTime) ..> (時間を選ぶ): include
+
+(チケットを選ぶ) as (selTic)
+(証明品を提示する) as (subProof)
+User --> (selTic)
+User --> (subProof)
+(selTic) .left.> (subProof)
+
+note bottom of (subProof)
+    証明品が必要なチケットを選んだ場合
+end note
+
+(持参品を提示する) as (subBring)
+User --> (subBring)
+
+
+newpage
+
+会計 as Cashier
+
+(基準価格を決める) as (defBase)
+(変動価格を決める) as (defDis)
+(チケット1枚の料金を決める) as (defPri)
+
+(defPri) ..> (defBase): include
+(defPri) ..> (defDis): include
+
+Cashier --> (defPri)
+
+(仮チケットを発行する) as (pubTempTic)
+Cashier -> (pubTempTic)
+(pubTempTic) .> (defPri): include
+
+(割引チケットと交換する) as (replTic)
+Cashier -up-> (replTic)
+(replTic) .> (pubTempTic): include
+
+(チケットを発行する) as (pubTic)
+Cashier -up-> (pubTic)
+(pubTic) .> (replTic): include
+
+
+@enduml
