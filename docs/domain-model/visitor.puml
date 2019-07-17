@@ -1,0 +1,90 @@
+@startuml
+
+package 映画 {
+    class 映画
+
+    class タイトル
+
+    enum 映像形式 {
+        通常
+        3D
+    }
+
+    enum 上映形態 {
+        極上爆音上映
+    }
+
+    package 上映回 {
+        class 上映回
+
+        package 上映日 {
+            class 上映日
+
+            class 日
+            class 曜日
+
+            上映日 o--> 日
+            上映日 o--> 曜日
+        }
+
+        package 上映開始時刻 {
+            class 上映開始時刻
+
+            class 時
+            class 分
+
+            上映開始時刻 o--> 時
+            上映開始時刻 o--> 分
+        }
+
+        上映回 o--> 上映日
+        上映回 o--> 上映開始時刻
+    }
+
+    映画 o--> タイトル
+    映画 o--> "1" 映像形式
+    映画 o-right-> "1" 上映回
+    映画 o--> "0..n" 上映形態
+}
+
+newpage
+
+package チケット {
+    class チケット
+
+    class 平日料金
+    class 休日料金
+
+    class 映画の日料金
+
+    package 時間帯料金 {
+        interface 時間帯料金
+
+        class 日中料金
+        class レイトショー料金
+
+        時間帯料金 *--> 日中料金
+        時間帯料金 *--> レイトショー料金
+    }
+
+    チケット o--> "1" 平日料金
+    チケット o--> "1" 休日料金
+    チケット o--> "0..1" 映画の日料金
+
+    時間帯料金 <|-- 平日料金
+    時間帯料金 <|-- 休日料金
+}
+
+newpage
+
+package 来館者 {
+    class 来館者
+
+    package 持参品 {
+    enum 持参品 {
+        3Dメガネ
+    }
+
+    来館者 o-> "0..n" 持参品
+}
+@enduml
