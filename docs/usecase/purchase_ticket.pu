@@ -4,22 +4,14 @@
 
 UserGroup -- User
 
-(観る回を選ぶ) as (selTime)
+(映画を選ぶ) as (selMovie)
 
-UserGroup -> (selTime)
-(selTime) ..> (映画を選ぶ): include
-(selTime) ..> (日付を選ぶ): include
-(selTime) ..> (時間を選ぶ): include
+UserGroup -> (selMovie)
+(selMovie) ..> (タイトルを選ぶ): include
+(selMovie) ..> (上映回を選ぶ): include
 
 (チケットを選ぶ) as (selTic)
-(証明品を提示する) as (subProof)
 User --> (selTic)
-User --> (subProof)
-(selTic) .left.> (subProof)
-
-note bottom of (subProof)
-    証明品が必要なチケットを選んだ場合
-end note
 
 (持参品を提示する) as (subBring)
 User --> (subBring)
